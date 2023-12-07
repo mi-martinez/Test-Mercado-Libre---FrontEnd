@@ -4,9 +4,12 @@ const stylesHeader = {
     height: '60px',
     display: 'flex',
     justifyContent: 'center',
+    position: 'sticky',
+    top: '0px',
     p: '10px',
     '& .header__container': {
       maxWidth: '1200px',
+      padding: '0 20px',
       width: '100%',
       display: 'flex',
       alignItems: 'center',
