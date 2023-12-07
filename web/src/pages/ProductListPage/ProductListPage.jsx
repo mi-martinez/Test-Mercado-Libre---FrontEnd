@@ -7,6 +7,7 @@ import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
 import Breadcrumbs from 'src/components/Breadcrumbs/Breadcrumbs'
+import ProductCardItem from 'src/components/ProductCardItem/ProductCardItem'
 
 const ProductListPage = ({ search }) => {
   // let [item, setItem] = useState(search)
@@ -33,7 +34,7 @@ const ProductListPage = ({ search }) => {
     try {
       const response = await axios.get(url)
       const data = await response.data
-      console.log(data)
+      // console.log(data)
       setProducts(data)
       setPagination({
         ...pagination,
@@ -58,12 +59,22 @@ const ProductListPage = ({ search }) => {
       />
 
       <Box>
-        <Breadcrumbs />
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            {JSON.stringify(products)}
+        <Breadcrumbs loading={loading} data={products?.filters} />
+        <Box
+          sx={{
+            background: 'white',
+            boxShadow: '0px 20px 20px #a8a8a840',
+            mt: '16px',
+          }}
+        >
+          <Grid container spacing={2}>
+            {products?.results?.map((item, i) => (
+              <Grid item xs={12} key={i}>
+                <ProductCardItem />
+              </Grid>
+            ))}
           </Grid>
-        </Grid>
+        </Box>
         <Pagination
           count={pagination.total}
           onChange={(e, page) => changePage(e, page)}
