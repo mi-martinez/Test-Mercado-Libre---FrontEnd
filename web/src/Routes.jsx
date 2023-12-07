@@ -15,9 +15,11 @@ const Routes = () => {
   return (
     <Router>
       <Set wrap={GeneralLayout}>
-        <Route path="/product-details" page={ProductDetailsPage} name="productDetails" />
-        <Route path="/" page={ProductListPage} name="productList" />
+        <Route path="/items/{id}" page={ProductDetailsPage} name="productDetails" />
+        <Route path="/items" page={ProductListPage} name="productList" />
+        <Route path="/" page={ProductListPage} name="productListHome" />
       </Set>
+
       <Route notfound page={NotFoundPage} />
     </Router>
   )

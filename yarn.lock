@@ -7385,6 +7385,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:^1.6.2":
+  version: 1.6.2
+  resolution: "axios@npm:1.6.2"
+  dependencies:
+    follow-redirects: ^1.15.0
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: 9b77e030e85e4f9cbcba7bb52fbff67d6ce906c92d213e0bd932346a50140faf83733bf786f55bd58301bd92f9973885c7b87d6348023e10f7eaf286d0791a1d
+  languageName: node
+  linkType: hard
+
 "axobject-query@npm:^3.2.1":
   version: 3.2.1
   resolution: "axobject-query@npm:3.2.1"
@@ -11611,7 +11622,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.0.0":
+"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.15.0":
   version: 1.15.3
   resolution: "follow-redirects@npm:1.15.3"
   peerDependenciesMeta:
@@ -17255,6 +17266,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"proxy-from-env@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "proxy-from-env@npm:1.1.0"
+  checksum: fe7dd8b1bdbbbea18d1459107729c3e4a2243ca870d26d34c2c1bcd3e4425b7bcc5112362df2d93cc7fb9746f6142b5e272fd1cc5c86ddf8580175186f6ad42b
+  languageName: node
+  linkType: hard
+
 "proxyquire@npm:2.1.3":
   version: 2.1.3
   resolution: "proxyquire@npm:2.1.3"
@@ -20766,6 +20784,7 @@ __metadata:
     "@redwoodjs/web": 6.5.0
     "@types/react": 18.2.37
     "@types/react-dom": 18.2.15
+    axios: ^1.6.2
     prop-types: 15.8.1
     react: 18.2.0
     react-dom: 18.2.0
