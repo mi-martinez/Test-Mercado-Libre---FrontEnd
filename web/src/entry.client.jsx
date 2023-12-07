@@ -7,11 +7,11 @@ import App from './App'
  * rather than replacing it.
  * https://reactjs.org/docs/react-dom-client.html#hydrateroot
  */
-const redwoodAppElement = document.getElementById('redwood-app')
+const redwoodAppElement = document.getElementById('mercado-libre-front-end')
 
 if (!redwoodAppElement) {
   throw new Error(
-    "Could not find an element with ID 'redwood-app'. Please ensure it exists in your 'web/src/index.html' file."
+    "Could not find an element with ID 'mercado-libre-front-end'. Please ensure it exists in your 'web/src/index.html' file."
   )
 }
 
