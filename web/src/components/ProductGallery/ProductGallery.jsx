@@ -9,17 +9,19 @@ const ProductGallery = ({ product }) => {
       <Box
         sx={{
           display: 'flex',
+          flexDirection: ['column', 'row'],
         }}
       >
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: ['row', 'column'],
             gap: '6px',
             padding: '16px',
             alignItems: 'flex-start',
             borderBottom: '1px solid #eeeeee',
             cursor: 'pointer',
+            order: [2, 1],
           }}
         >
           {product?.product?.pictures?.map((item, i) => (
@@ -54,6 +56,7 @@ const ProductGallery = ({ product }) => {
             alignItems: 'center',
             justifyContent: 'center',
             height: ['400px', '600px'],
+            order: [1, 2],
             '& img': {
               width: '100%',
               height: '100%',
