@@ -77,13 +77,20 @@ const ProductListPage = ({ search }) => {
         <Breadcrumbs loading={loading} data={products?.filters} />
         <Box sx={stylesProductListPage.mainContainer}>
           {!loading ? (
-            <Grid container spacing={0}>
-              {products?.results?.map((item, i) => (
-                <Grid item xs={12} key={i}>
-                  <ProductCardItem item={item} />
-                </Grid>
-              ))}
-            </Grid>
+            <>
+              {products?.results?.length === 0 && (
+                <Typography {...stylesProductListPage.noResultsText}>
+                  No hay resultados para tu búsqueda
+                </Typography>
+              )}
+              <Grid container spacing={0}>
+                {products?.results?.map((item, i) => (
+                  <Grid item xs={12} key={i}>
+                    <ProductCardItem item={item} />
+                  </Grid>
+                ))}
+              </Grid>
+            </>
           ) : (
             <>
               {[...Array(4)].map((_, index) => (

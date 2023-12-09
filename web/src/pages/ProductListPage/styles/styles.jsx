@@ -49,6 +49,18 @@ const stylesProductListPage = {
       background: '#f2f2f2',
     },
   },
+  noResultsText: {
+    variant: 'body1',
+    sx: {
+      fontSize: '14px',
+      color: '#999999',
+      textAlign: 'center',
+      height: '400px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  },
 }
 
 export default stylesProductListPage

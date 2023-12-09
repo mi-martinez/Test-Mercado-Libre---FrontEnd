@@ -16,10 +16,13 @@ const ProductDetailsPage = ({ id }) => {
     product: {},
     description: '',
   })
-  // console.log('product', product)
   const [loading, setLoading] = useState(false)
 
   const [openThanks, setOpenThanks] = useState(false)
+  const [error, setError] = useState({
+    error: false,
+    message: '',
+  })
 
   const currencyId = product?.product?.currency_id || 'ARS'
 
@@ -65,6 +68,11 @@ const ProductDetailsPage = ({ id }) => {
     } catch (error) {
       console.log(error)
       setLoading(false)
+      setError({
+        error: true,
+        message:
+          'El producto al que intenta acceder no existe, por favor compruebe la URL',
+      })
     }
   }
 
@@ -80,87 +88,109 @@ const ProductDetailsPage = ({ id }) => {
       />
       <Box sx={stylesProductDetailsPage.container}>
         {!loading ? (
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={8}>
-              <ProductGallery product={product} />
-              <Box sx={stylesProductDetailsPage.descriptionBox}>
-                <Typography variant="h4" sx={{ fontWeight: '400', mb: '12px' }}>
-                  Descripción del producto
-                </Typography>
-                <Typography variant="body1">
-                  {product !== undefined && product?.description !== ''
-                    ? product?.description
-                    : 'Este producto no tiene descripción'}
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box sx={{ padding: '0 20px', mt: '14px' }}>
-                <Typography variant="body1">
-                  {product !== undefined
-                    ? product?.product?.condition === 'new'
-                      ? 'Nuevo'
-                      : 'Usado'
-                    : ''}{' '}
-                  -{' '}
-                  {product !== undefined
-                    ? product?.product?.initial_quantity
-                    : ''}{' '}
-                  vendidos
-                </Typography>
-                <Typography
-                  variant="h4"
-                  sx={{ fontWeight: '600', mb: '12px', mt: '6px' }}
-                >
-                  {product !== undefined ? product?.product?.title : ''}
-                </Typography>
-                <Box sx={stylesProductDetailsPage.priceBox}>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      fontWeight: '600',
-                      mt: '6px',
-                      fontSize: '38px',
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      gap: '6px',
-                    }}
-                  >
-                    {formatPrice(product?.product?.price, true)}
-                  </Typography>
-                  {product?.product?.original_price && (
+          <>
+            {error.error ? (
+              <Typography
+                variant="h4"
+                sx={{
+                  fontSize: '14px',
+                  color: '#999999',
+                  textAlign: 'center',
+                  height: '400px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                {error.message}
+              </Typography>
+            ) : (
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={8}>
+                  <ProductGallery product={product} />
+                  <Box sx={stylesProductDetailsPage.descriptionBox}>
                     <Typography
-                      variant="body1"
-                      sx={{
-                        color: '#999999',
-                        textDecoration: 'line-through',
-                        marginTop: '8px',
-                        fontSize: '16px',
-                      }}
+                      variant="h4"
+                      sx={{ fontWeight: '400', mb: '12px' }}
                     >
-                      {formatPrice(product?.product?.original_price)}
+                      Descripción del producto
                     </Typography>
-                  )}
-                </Box>
-                <Box>
-                  <Button
-                    color="secondary"
-                    variant="contained"
-                    size="large"
-                    sx={stylesProductDetailsPage.buyButton}
-                    onClick={() => setOpenThanks(true)}
-                  >
-                    Comprar
-                  </Button>
-                  <Grow in={openThanks}>
-                    <Box>
-                      <Author />
+                    <Typography variant="body1">
+                      {product !== undefined && product?.description !== ''
+                        ? product?.description
+                        : 'Este producto no tiene descripción'}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Box sx={{ padding: '0 20px', mt: '14px' }}>
+                    <Typography variant="body1">
+                      {product !== undefined
+                        ? product?.product?.condition === 'new'
+                          ? 'Nuevo'
+                          : 'Usado'
+                        : ''}{' '}
+                      -{' '}
+                      {product !== undefined
+                        ? product?.product?.initial_quantity
+                        : ''}{' '}
+                      vendidos
+                    </Typography>
+                    <Typography
+                      variant="h4"
+                      sx={{ fontWeight: '600', mb: '12px', mt: '6px' }}
+                    >
+                      {product !== undefined ? product?.product?.title : ''}
+                    </Typography>
+                    <Box sx={stylesProductDetailsPage.priceBox}>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontWeight: '600',
+                          mt: '6px',
+                          fontSize: '38px',
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          gap: '6px',
+                        }}
+                      >
+                        {formatPrice(product?.product?.price, true)}
+                      </Typography>
+                      {product?.product?.original_price && (
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            color: '#999999',
+                            textDecoration: 'line-through',
+                            marginTop: '8px',
+                            fontSize: '16px',
+                          }}
+                        >
+                          {formatPrice(product?.product?.original_price)}
+                        </Typography>
+                      )}
                     </Box>
-                  </Grow>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
+                    <Box>
+                      <Button
+                        color="secondary"
+                        variant="contained"
+                        size="large"
+                        sx={stylesProductDetailsPage.buyButton}
+                        onClick={() => setOpenThanks(true)}
+                      >
+                        Comprar
+                      </Button>
+                      <Grow in={openThanks}>
+                        <Box>
+                          <Author />
+                        </Box>
+                      </Grow>
+                    </Box>
+                  </Box>
+                </Grid>
+              </Grid>
+            )}
+          </>
         ) : (
           <ProductDetailsPageSkeleton />
         )}
