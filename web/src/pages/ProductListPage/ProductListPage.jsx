@@ -12,6 +12,7 @@ import ProductCardItem from 'src/components/ProductCardItem/ProductCardItem'
 const ProductListPage = ({ search }) => {
   // let [item, setItem] = useState(search)
   const [products, setProducts] = useState([])
+  console.log('products', products)
   const [loading, setLoading] = useState(false)
 
   const [pagination, setPagination] = useState({
@@ -25,19 +26,23 @@ const ProductListPage = ({ search }) => {
       ...pagination,
       offset: (page - 1) * pagination.limit,
     })
-    getProducts(search)
+    getProducts(search, {
+      ...pagination,
+      offset: (page - 1) * pagination.limit,
+    })
   }
 
-  const getProducts = async (item) => {
-    const url = `https://api.mercadolibre.com/sites/MLA/search?q=${item}&limit=${pagination.limit}&offset=${pagination.offset}`
+  const getProducts = async (item, newPagination) => {
+    console.log('Enta a getProducts')
+    const url = `https://api.mercadolibre.com/sites/MLA/search?q=${item}&limit=${newPagination.limit}&offset=${newPagination.offset}`
     setLoading(true)
     try {
       const response = await axios.get(url)
       const data = await response.data
-      // console.log(data)
       setProducts(data)
+      // console.log(data)
       setPagination({
-        ...pagination,
+        ...newPagination,
         total: data.paging.total,
       })
       setLoading(false)
@@ -48,8 +53,12 @@ const ProductListPage = ({ search }) => {
   }
 
   useEffect(() => {
-    getProducts(search)
-  }, [search])
+    getProducts(search, pagination)
+  }, [search, pagination.offset])
+
+  useEffect(() => {
+    getProducts(search, pagination)
+  }, [])
 
   return (
     <>
@@ -64,20 +73,25 @@ const ProductListPage = ({ search }) => {
           sx={{
             background: 'white',
             boxShadow: '0px 20px 20px #a8a8a840',
-            mt: '16px',
+            mb: '16px',
+            p: '0 0 ',
+            ml: ['-15px', '0'],
+            mr: ['-15px', '0'],
           }}
         >
-          <Grid container spacing={2}>
+          <Grid container spacing={0}>
             {products?.results?.map((item, i) => (
               <Grid item xs={12} key={i}>
-                <ProductCardItem />
+                <ProductCardItem item={item} loading={loading} />
               </Grid>
             ))}
           </Grid>
         </Box>
         <Pagination
-          count={pagination.total}
-          onChange={(e, page) => changePage(e, page)}
+          count={Math.ceil(pagination.total / pagination.limit)}
+          onChange={(e, page) => {
+            changePage(e, page)
+          }}
           page={pagination.offset / pagination.limit + 1}
         />
       </Box>
