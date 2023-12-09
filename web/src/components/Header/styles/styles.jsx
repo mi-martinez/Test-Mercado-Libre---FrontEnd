@@ -8,6 +8,9 @@ const stylesHeader = {
     top: '0px',
     zIndex: '99',
     width: '100%',
+    WebkitOverflowScrolling: 'touch',
+    overflowY: 'scroll',
+    overflowX: 'hidden',
     p: '10px',
     '& .header__container': {
       maxWidth: '1200px',

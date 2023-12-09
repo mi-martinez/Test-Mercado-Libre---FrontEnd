@@ -1,6 +1,8 @@
 const styleGlobalSearch = {
   globalSearch: {
     width: '100%',
+    position: 'relative',
+    zIndex: '1',
     '& .nav-search': {
       position: 'relative',
       width: '100%',
