@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 
-import { Grid, Box } from '@mui/material'
+import { Grid, Box, Typography } from '@mui/material'
 import axios from 'axios'
 
 import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
+
+import ProductGallery from 'src/components/ProductGallery/ProductGallery'
 
 const ProductDetailsPage = ({ id }) => {
   const [product, setProduct] = useState({
@@ -13,7 +15,6 @@ const ProductDetailsPage = ({ id }) => {
   })
   console.log('product', product)
   const [loading, setLoading] = useState(false)
-  const [currentImage, setCurrentImage] = useState(0)
 
   const getProduct = async (id) => {
     const url = `https://api.mercadolibre.com/items/${id}`
@@ -59,75 +60,26 @@ const ProductDetailsPage = ({ id }) => {
         {!loading && (
           <Grid container spacing={2}>
             <Grid item xs={12} md={8}>
+              <ProductGallery product={product} />
               <Box
                 sx={{
-                  display: 'flex',
+                  padding: '15px 26px',
+                  marginTop: '10px',
+                  marginBottom: '26px',
                 }}
               >
-                <Box
+                <Typography
+                  variant="h4"
                   sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '6px',
-                    padding: '16px',
-                    alignItems: 'flex-start',
-                    borderBottom: '1px solid #eeeeee',
-                    cursor: 'pointer',
+                    fontWeight: '400',
+                    mb: '12px',
                   }}
                 >
-                  {product?.product?.pictures?.map((item, i) => (
-                    <Box
-                      key={i}
-                      sx={{
-                        maxWidth: '50px',
-                        maxHeight: '50px',
-                        width: '50px',
-                        height: '50px',
-                        cursor: 'pointer',
-                        p: '6px',
-                        border:
-                          currentImage === i ? '2px solid #3483fa' : 'none',
-                        borderRadius: '4px',
-                        overflow: 'hidden', // Asegura que la imagen no se desborde del contenedor
-                        '& img': {
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'contain',
-                        },
-                      }}
-                      onClick={() => setCurrentImage(i)}
-                    >
-                      <img
-                        key={i}
-                        src={item.url}
-                        alt={product?.product?.title}
-                      />
-                    </Box>
-                  ))}
-                </Box>
-                <Box
-                  sx={{
-                    width: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    height: '600px',
-                    '& img': {
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'contain',
-                    },
-                  }}
-                >
-                  <img
-                    src={
-                      product?.product?.pictures
-                        ? product.product.pictures[currentImage].url
-                        : ''
-                    }
-                    alt={product?.product?.title}
-                  />
-                </Box>
+                  Descripción del producto
+                </Typography>
+                <Typography variant="body1">
+                  {product !== undefined ? product?.description : ''}
+                </Typography>
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
