@@ -1,27 +1,22 @@
 import { useEffect, useState } from 'react'
 
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-  Snackbar,
-  Alert,
-  Grow,
-} from '@mui/material'
+import { Grid, Box, Typography, Button, Grow } from '@mui/material'
 import axios from 'axios'
 
-import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
+import Author from 'src/components/Author/Author'
+import ProductDetailsPageSkeleton from 'src/components/ProductDetailsPageSkeleton/ProductDetailsPageSkeleton'
 import ProductGallery from 'src/components/ProductGallery/ProductGallery'
+
+import stylesProductDetailsPage from './styles/styles'
 
 const ProductDetailsPage = ({ id }) => {
   const [product, setProduct] = useState({
     product: {},
     description: '',
   })
-  console.log('product', product)
+  // console.log('product', product)
   const [loading, setLoading] = useState(false)
 
   const [openThanks, setOpenThanks] = useState(false)
@@ -83,35 +78,13 @@ const ProductDetailsPage = ({ id }) => {
         title={product !== undefined ? product.product.title : ''}
         description={product !== undefined ? product.description : ''}
       />
-      <Box
-        sx={{
-          background: 'white',
-          boxShadow: '0px 20px 20px #a8a8a840',
-          mb: '16px',
-          mt: '30px',
-          p: '0 0 ',
-          ml: ['-15px', '0'],
-          mr: ['-15px', '0'],
-        }}
-      >
-        {!loading && (
+      <Box sx={stylesProductDetailsPage.container}>
+        {!loading ? (
           <Grid container spacing={2}>
             <Grid item xs={12} md={8}>
               <ProductGallery product={product} />
-              <Box
-                sx={{
-                  padding: '15px 26px',
-                  marginTop: '10px',
-                  marginBottom: '26px',
-                }}
-              >
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontWeight: '400',
-                    mb: '12px',
-                  }}
-                >
+              <Box sx={stylesProductDetailsPage.descriptionBox}>
+                <Typography variant="h4" sx={{ fontWeight: '400', mb: '12px' }}>
                   Descripción del producto
                 </Typography>
                 <Typography variant="body1">
@@ -122,12 +95,7 @@ const ProductDetailsPage = ({ id }) => {
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Box
-                sx={{
-                  padding: '0 20px',
-                  mt: '14px',
-                }}
-              >
+              <Box sx={{ padding: '0 20px', mt: '14px' }}>
                 <Typography variant="body1">
                   {product !== undefined
                     ? product?.product?.condition === 'new'
@@ -142,20 +110,11 @@ const ProductDetailsPage = ({ id }) => {
                 </Typography>
                 <Typography
                   variant="h4"
-                  sx={{
-                    fontWeight: '600',
-                    mb: '12px',
-                    mt: '6px',
-                  }}
+                  sx={{ fontWeight: '600', mb: '12px', mt: '6px' }}
                 >
                   {product !== undefined ? product?.product?.title : ''}
                 </Typography>
-
-                <Box
-                  sx={{
-                    mt: '28px',
-                  }}
-                >
+                <Box sx={stylesProductDetailsPage.priceBox}>
                   <Typography
                     variant="body1"
                     sx={{
@@ -183,86 +142,27 @@ const ProductDetailsPage = ({ id }) => {
                     </Typography>
                   )}
                 </Box>
-
                 <Box>
                   <Button
                     color="secondary"
                     variant="contained"
                     size="large"
-                    sx={{
-                      mt: '60px',
-                      backgroundColor: '#3483fa',
-                      width: '100%',
-                      boxShadow: 'none',
-                      padding: '14px 10px',
-                      borderRadius: '8px',
-                      textTransform: 'capitalize',
-                      fontSize: '18px',
-                      fontWeight: '300',
-                      '&:hover': {
-                        backgroundColor: '#3483fa',
-                        boxShadow: 'none',
-                      },
-                    }}
+                    sx={stylesProductDetailsPage.buyButton}
                     onClick={() => setOpenThanks(true)}
                   >
                     Comprar
                   </Button>
-
                   <Grow in={openThanks}>
-                    <Alert
-                      severity="success"
-                      icon={false}
-                      sx={{
-                        mt: '20px',
-                        '& .MuiAlert-message': {
-                          width: '100%',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '10px',
-                        },
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          '& img': {
-                            width: '60px',
-                            height: '60px',
-                            borderRadius: '50%',
-                            marginRight: '10px',
-                          },
-                        }}
-                      >
-                        <img
-                          src="https://media.licdn.com/dms/image/D4E03AQGhYQESNFGSLA/profile-displayphoto-shrink_400_400/0/1682626764637?e=1707350400&v=beta&t=Gm57FnX17U2ld-YuGSuY3F9RaRWr4O2ZGf3AQUElYsk"
-                          alt="Michael"
-                        />
-                      </Box>
-                      <Box
-                        sx={{
-                          '& a': {
-                            color: '#3483fa',
-                            textDecoration: 'none',
-                          },
-                        }}
-                      >
-                        Esta fue una demostración de frontEnd realizada por
-                        Michael Giovanny Martinez para Mercado Libre.
-                        <a
-                          href="https://www.linkedin.com/in/michael-giovanny-martinez/"
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {' '}
-                          Ver perfil
-                        </a>
-                      </Box>
-                    </Alert>
+                    <Box>
+                      <Author />
+                    </Box>
                   </Grow>
                 </Box>
               </Box>
             </Grid>
           </Grid>
+        ) : (
+          <ProductDetailsPageSkeleton />
         )}
       </Box>
     </>

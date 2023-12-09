@@ -17,6 +17,8 @@ import Breadcrumbs from 'src/components/Breadcrumbs/Breadcrumbs'
 import ProductCardItem from 'src/components/ProductCardItem/ProductCardItem'
 import ProductCardSkeleton from 'src/components/ProductCardItem/skeleton'
 
+import stylesProductListPage from './styles/styles'
+
 const ProductListPage = ({ search }) => {
   const [products, setProducts] = useState([])
   // console.log('products', products)
@@ -73,16 +75,7 @@ const ProductListPage = ({ search }) => {
 
       <Box>
         <Breadcrumbs loading={loading} data={products?.filters} />
-        <Box
-          sx={{
-            background: 'white',
-            boxShadow: '0px 20px 20px #a8a8a840',
-            mb: '16px',
-            p: '0 0 ',
-            ml: ['-15px', '0'],
-            mr: ['-15px', '0'],
-          }}
-        >
+        <Box sx={stylesProductListPage.mainContainer}>
           {!loading ? (
             <Grid container spacing={0}>
               {products?.results?.map((item, i) => (
@@ -99,27 +92,9 @@ const ProductListPage = ({ search }) => {
             </>
           )}
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            mb: '16px',
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              pl: '15px',
-            }}
-          >
-            <Typography
-              variant="body1"
-              sx={{ fontSize: '14px', color: '#999999' }}
-            >
+        <Box sx={stylesProductListPage.resultsContainer}>
+          <Box sx={stylesProductListPage.resultsTextContainer}>
+            <Typography {...stylesProductListPage.resultsText}>
               Resultados por página:
             </Typography>
             <Select
@@ -136,18 +111,7 @@ const ProductListPage = ({ search }) => {
                   offset: 0,
                 })
               }}
-              sx={{
-                height: '30px',
-                borderRadius: '0',
-                border: 'none',
-                '&:focus': {
-                  border: 'none',
-                  outline: 'none',
-                },
-                '& fieldset': {
-                  border: 'none',
-                },
-              }}
+              sx={stylesProductListPage.select}
             >
               <MenuItem value={4}>4</MenuItem>
               <MenuItem value={10}>10</MenuItem>
@@ -162,20 +126,7 @@ const ProductListPage = ({ search }) => {
               changePage(e, page)
             }}
             page={pagination.offset / pagination.limit + 1}
-            sx={{
-              '& .MuiPaginationItem-root': {
-                color: '#3483fa',
-              },
-              '& .Mui-selected': {
-                color: '#3483fa',
-                background: '#fff !important',
-              },
-              // hover
-              '& .MuiPaginationItem-root:hover': {
-                color: '#3483fa',
-                background: '#f2f2f2',
-              },
-            }}
+            sx={stylesProductListPage.pagination}
           />
         </Box>
       </Box>

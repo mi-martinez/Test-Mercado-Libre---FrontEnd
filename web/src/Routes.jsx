@@ -15,9 +15,9 @@ const Routes = () => {
   return (
     <Router>
       <Set wrap={GeneralLayout}>
-        <Route path="/items/{id:String}" page={ProductDetailsPage} name="productDetails" prerender />
-        <Route path="/items" page={ProductListPage} name="productList" prerender />
-        <Route path="/" page={ProductListPage} name="productListHome" prerender />
+        <Route path="/items/{id:String}" page={ProductDetailsPage} name="productDetails" />
+        <Route path="/items" page={ProductListPage} name="productList" />
+        <Route path="/" page={ProductListPage} name="productListHome" />
       </Set>
 
       <Route notfound page={NotFoundPage} />
