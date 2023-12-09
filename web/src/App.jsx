@@ -147,7 +147,7 @@ const App = () => (
   <FatalErrorBoundary page={FatalErrorPage}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
+      <RedwoodProvider titleTemplate="%PageTitle">
         <RedwoodApolloProvider>
           <Routes />
         </RedwoodApolloProvider>

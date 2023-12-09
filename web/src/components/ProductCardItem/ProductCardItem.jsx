@@ -5,7 +5,8 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 
 import { Link, routes, navigate } from '@redwoodjs/router'
 
-const ProductCardItem = ({ item, loading }) => {
+const ProductCardItem = ({ item }) => {
+  // console.log('item', item)
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
@@ -22,6 +23,10 @@ const ProductCardItem = ({ item, loading }) => {
 
   const imgUrl = `https://http2.mlstatic.com/D-NQ-NP-${item?.thumbnail_id}-O.webp`
 
+  const handleClick = () => {
+    navigate(routes.productDetails({ id: item.id }))
+  }
+
   return (
     <>
       <Box
@@ -33,6 +38,7 @@ const ProductCardItem = ({ item, loading }) => {
           borderBottom: '1px solid #eeeeee',
           cursor: 'pointer',
         }}
+        onClick={() => handleClick()}
       >
         <Box
           sx={{
@@ -40,8 +46,8 @@ const ProductCardItem = ({ item, loading }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: '200px',
-            height: '200px',
+            width: ['150px', '200px'],
+            height: ['150px', '200px'],
           }}
         >
           <CardMedia
@@ -66,6 +72,7 @@ const ProductCardItem = ({ item, loading }) => {
             sx={{
               display: 'flex',
               alignItems: 'center',
+              flexWrap: 'wrap',
               gap: '10px',
             }}
           >
@@ -110,18 +117,20 @@ const ProductCardItem = ({ item, loading }) => {
             )}
           </Box>
 
-          <Box>
-            <Typography
-              variant="body1"
-              sx={{
-                fontSize: '14px',
-                color: '#7c7c7c',
-              }}
-            >
-              en {item?.installments?.quantity}x{' '}
-              {formatPrice(item?.installments?.amount)}
-            </Typography>
-          </Box>
+          {item?.installments && (
+            <Box>
+              <Typography
+                variant="body1"
+                sx={{
+                  fontSize: '14px',
+                  color: '#7c7c7c',
+                }}
+              >
+                en {item?.installments?.quantity}x{' '}
+                {formatPrice(item?.installments?.amount)}
+              </Typography>
+            </Box>
+          )}
           <Typography
             variant="body1"
             sx={{

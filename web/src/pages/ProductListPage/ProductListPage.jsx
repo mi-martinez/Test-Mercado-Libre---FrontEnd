@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react'
 
-import { Box, Grid, Pagination } from '@mui/material'
+import {
+  Box,
+  Grid,
+  Pagination,
+  Select,
+  MenuItem,
+  Typography,
+} from '@mui/material'
 import axios from 'axios'
 
 import { Link, routes } from '@redwoodjs/router'
@@ -8,11 +15,11 @@ import { MetaTags } from '@redwoodjs/web'
 
 import Breadcrumbs from 'src/components/Breadcrumbs/Breadcrumbs'
 import ProductCardItem from 'src/components/ProductCardItem/ProductCardItem'
+import ProductCardSkeleton from 'src/components/ProductCardItem/skeleton'
 
 const ProductListPage = ({ search }) => {
-  // let [item, setItem] = useState(search)
   const [products, setProducts] = useState([])
-  console.log('products', products)
+  // console.log('products', products)
   const [loading, setLoading] = useState(false)
 
   const [pagination, setPagination] = useState({
@@ -33,7 +40,6 @@ const ProductListPage = ({ search }) => {
   }
 
   const getProducts = async (item, newPagination) => {
-    console.log('Enta a getProducts')
     const url = `https://api.mercadolibre.com/sites/MLA/search?q=${item}&limit=${newPagination.limit}&offset=${newPagination.offset}`
     setLoading(true)
     try {
@@ -54,17 +60,15 @@ const ProductListPage = ({ search }) => {
 
   useEffect(() => {
     getProducts(search, pagination)
-  }, [search, pagination.offset])
-
-  useEffect(() => {
-    getProducts(search, pagination)
-  }, [])
+  }, [search])
 
   return (
     <>
       <MetaTags
-        title={`${search} | Mercado Libre`}
-        description="ProductList page"
+        title={
+          search === undefined ? 'Mercado Libre' : `${search} | Mercado Libre`
+        }
+        description="Encuentra lo que necesitas, miles de productos de todo tipo en un solo lugar: Mercado Libre"
       />
 
       <Box>
@@ -79,21 +83,101 @@ const ProductListPage = ({ search }) => {
             mr: ['-15px', '0'],
           }}
         >
-          <Grid container spacing={0}>
-            {products?.results?.map((item, i) => (
-              <Grid item xs={12} key={i}>
-                <ProductCardItem item={item} loading={loading} />
-              </Grid>
-            ))}
-          </Grid>
+          {!loading ? (
+            <Grid container spacing={0}>
+              {products?.results?.map((item, i) => (
+                <Grid item xs={12} key={i}>
+                  <ProductCardItem item={item} />
+                </Grid>
+              ))}
+            </Grid>
+          ) : (
+            <>
+              {[...Array(4)].map((_, index) => (
+                <ProductCardSkeleton key={index} />
+              ))}
+            </>
+          )}
         </Box>
-        <Pagination
-          count={Math.ceil(pagination.total / pagination.limit)}
-          onChange={(e, page) => {
-            changePage(e, page)
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            mb: '16px',
           }}
-          page={pagination.offset / pagination.limit + 1}
-        />
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              pl: '15px',
+            }}
+          >
+            <Typography
+              variant="body1"
+              sx={{ fontSize: '14px', color: '#999999' }}
+            >
+              Resultados por página:
+            </Typography>
+            <Select
+              value={pagination.limit}
+              onChange={(e) => {
+                setPagination({
+                  ...pagination,
+                  limit: e.target.value,
+                  offset: 0,
+                })
+                getProducts(search, {
+                  ...pagination,
+                  limit: e.target.value,
+                  offset: 0,
+                })
+              }}
+              sx={{
+                height: '30px',
+                borderRadius: '0',
+                border: 'none',
+                '&:focus': {
+                  border: 'none',
+                  outline: 'none',
+                },
+                '& fieldset': {
+                  border: 'none',
+                },
+              }}
+            >
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={50}>50</MenuItem>
+              <MenuItem value={100}>100</MenuItem>
+            </Select>
+          </Box>
+          <Pagination
+            count={Math.ceil(pagination.total / pagination.limit)}
+            shape="rounded"
+            onChange={(e, page) => {
+              changePage(e, page)
+            }}
+            page={pagination.offset / pagination.limit + 1}
+            sx={{
+              '& .MuiPaginationItem-root': {
+                color: '#3483fa',
+              },
+              '& .Mui-selected': {
+                color: '#3483fa',
+                background: '#fff !important',
+              },
+              // hover
+              '& .MuiPaginationItem-root:hover': {
+                color: '#3483fa',
+                background: '#f2f2f2',
+              },
+            }}
+          />
+        </Box>
       </Box>
     </>
   )
