@@ -1,5 +1,4 @@
-![Alt Text](./web/src/components/Header/images/mercado-libre.svg)
-<img src='./web/src/components/Header/images/mercado-libre.svg' width='150' >
+<img src='./web/src/components/Header/images/mercado-libre.svg' width='250' >
 
 # Prueba tecnica Mercado Libre
 
