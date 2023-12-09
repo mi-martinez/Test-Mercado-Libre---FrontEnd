@@ -11,16 +11,22 @@ import stylesHeader from './styles/styles'
 const HeaderBox = () => {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
+  const logo = matches ? logoDesktop : logoMobile
 
   return (
     <Box sx={stylesHeader.headerTop}>
       <Box className="header__container">
         <Link href="/" underline="none">
-          {matches ? (
-            <img src={logoDesktop} alt="Mercado Libre" />
-          ) : (
-            <img src={logoMobile} alt="Mercado Libre" />
-          )}
+          <Box
+            width={matches ? '120px' : '50px'}
+            sx={{
+              background: `url(${logo}) no-repeat center center`,
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              height: '100%',
+            }}
+          />
         </Link>
         <GlobalSearch />
       </Box>
