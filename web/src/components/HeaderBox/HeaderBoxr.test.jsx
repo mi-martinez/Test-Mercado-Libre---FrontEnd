@@ -1,14 +1,14 @@
 import { render } from '@redwoodjs/testing/web'
 
-import Header from './Header'
+import HeaderBox from './HeaderBox'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
 
-describe('Header', () => {
+describe('HeaderBox', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<Header />)
+      render(<HeaderBox />)
     }).not.toThrow()
   })
 })

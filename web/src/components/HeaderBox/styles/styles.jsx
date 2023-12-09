@@ -1,5 +1,5 @@
 const stylesHeader = {
-  header: {
+  headerTop: {
     bgcolor: 'primary.main',
     height: '60px',
     display: 'flex',

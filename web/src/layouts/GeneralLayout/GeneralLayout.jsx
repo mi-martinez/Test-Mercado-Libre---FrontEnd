@@ -1,11 +1,11 @@
 import { Container } from '@mui/material'
 
-import Header from 'src/components/Header/Header'
+import HeaderBox from 'src/components/HeaderBox/HeaderBox'
 
 const GeneralLayout = ({ children }) => {
   return (
     <>
-      <Header />
+      <HeaderBox />
       <Container
         sx={{
           pt: '60px',

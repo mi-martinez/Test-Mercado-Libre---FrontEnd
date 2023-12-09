@@ -8,12 +8,12 @@ import logoMobile from './images/meli-isotipo.svg'
 import logoDesktop from './images/mercado-libre.svg'
 import stylesHeader from './styles/styles'
 
-const Header = () => {
+const HeaderBox = () => {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
-    <Box sx={stylesHeader.header}>
+    <Box sx={stylesHeader.headerTop}>
       <Box className="header__container">
         <Link href="/" underline="none">
           {matches ? (
@@ -28,4 +28,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default HeaderBox
