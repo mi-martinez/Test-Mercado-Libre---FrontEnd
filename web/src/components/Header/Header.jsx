@@ -13,20 +13,18 @@ const Header = () => {
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
-    <>
-      <Box sx={stylesHeader.header}>
-        <Box className="header__container">
-          <Link href="/" underline="none">
-            {matches ? (
-              <img src={logoDesktop} alt="Mercado Libre" />
-            ) : (
-              <img src={logoMobile} alt="Mercado Libre" />
-            )}
-          </Link>
-          <GlobalSearch />
-        </Box>
+    <Box sx={stylesHeader.header}>
+      <Box className="header__container">
+        <Link href="/" underline="none">
+          {matches ? (
+            <img src={logoDesktop} alt="Mercado Libre" />
+          ) : (
+            <img src={logoMobile} alt="Mercado Libre" />
+          )}
+        </Link>
+        <GlobalSearch />
       </Box>
-    </>
+    </Box>
   )
 }
 

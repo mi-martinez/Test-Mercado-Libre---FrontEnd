@@ -6,7 +6,14 @@ const GeneralLayout = ({ children }) => {
   return (
     <>
       <Header />
-      <Container maxWidth="lg">{children}</Container>
+      <Container
+        sx={{
+          pt: '60px',
+        }}
+        maxWidth="lg"
+      >
+        {children}
+      </Container>
     </>
   )
 }
